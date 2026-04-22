@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<%
+    let randomIndex = parseInt(Math.random() * chosenWords.length); // generate a random index
+    let chosenWord = chosenWords[randomIndex]; // pick that as our correct word
+    let [correctWord, correctPart, correctDef] = chosenWord.split('\t'); // break it up
+%>
+
+<h1>Word Quiz!</h1>
+
+<!-- Show the word and part of speech -->
+<h2><%= correctWord %> - <%= correctPart %></h2>
+
+<form action="">
+    <ol>
+        <% for (currentWord of chosenWords) { 
+            // Loop through each word, show its definition only in the list
+            let [word, part, def] = currentWord.split('\t'); 
+        %>
+            <li>
+                <label>
+                    <input type="radio" name="answer">
+                    <%= def %>
+                </label>
+            </li>
+        <% } %>
+    </ol>
+
+    <input type="submit" value="Submit Answer!">
+</form>
+
+</body>
+</html>

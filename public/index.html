@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="submit">
+        <div>
+            <label for="username">UserName</label>
+            <input type="text" name="username" id="username" size="10">
+        </div>
+
+        <div>
+            <p>What toppings do you want on your pizza?</p>
+
+            <input type="checkbox" name="topping" value="Pepperoni" id="pepperoni">
+            <label for="pepperoni">Pepperoni</label>
+            <br>
+
+            <input type="checkbox" name="topping" value="Sausage" id="sausage" checked>
+            <label for="sausage">Sausage</label>
+            <br>
+
+            <input type="checkbox" name="topping" value="Chicken" id="chicken">
+            <label for="chicken">Chicken</label>
+        </div>
+
+        <input type="submit">
+    </form>
+
+    <br><hr>
+
+    <form action="submit">
+        <select name="favoritecharacter" multiple>
+            <optgroup label="Major Char">
+                <option>Jerry</option>
+                <option>George</option>
+                <option selected>Kramer</option>
+                <option>Elaine</option>
+            </optgroup>
+
+            <optgroup label="Minor Char">
+                <option>Newman</option>
+            </optgroup>
+        </select>
+
+        <label for="visa">
+            <input type="radio" name="cc" value="Visa" id="visa" checked> Visa
+        </label>
+
+        <label for="mc">
+            <input type="radio" name="cc" value="Master Card" id="mc"> Master Card
+        </label>
+
+        <label for="amex">
+            <input type="radio" name="cc" value="Amex" id="amex"> Amex
+        </label>
+
+        <input type="submit">
+    </form>
+
+</body>
+</html>
