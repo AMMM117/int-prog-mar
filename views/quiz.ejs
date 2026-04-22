@@ -25,7 +25,7 @@
 
 <form action="/quiz" method="post">
     <ol>
-        <% for (currentWord of chosenWords) {
+        <% for (let currentWord of chosenWords) {
             // Loop through each word, show its definition only
             let [word, part, def] = currentWord.split('\t');
         %>

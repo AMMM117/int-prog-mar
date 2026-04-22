@@ -8,6 +8,21 @@ router.get("/", async (req, res) => {
     res.render('quiz', { chosenWords });
 });
 
+router.post("/", async (req, res) => {
+    let chosenWords = await getWords();
+
+    let userChoice = req.body.userChoice;
+    let correctDef = req.body.correctDef;
+    let totalQuestions = parseInt(req.body.totalQuestions) + 1;
+    let totalCorrect = parseInt(req.body.totalCorrect);
+
+    if (userChoice === correctDef) {
+        totalCorrect++;
+    }
+
+    res.render('quiz', { chosenWords, totalQuestions, totalCorrect });
+});
+
 let getWords = async () => {
     let randomPart = getRandomPart();
     let allWords = await readFile('resources/allwords.txt', 'utf8');
