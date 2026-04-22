@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <title>Document</title>
+</head>
 <body>
 
 <%
-    let randomIndex = parseInt(Math.random() * chosenWords.length); // generate a random index
-    let chosenWord = chosenWords[randomIndex]; // pick that as our correct word
-    let [correctWord, correctPart, correctDef] = chosenWord.split('\t'); // break it up
+    let questionCount = locals.totalQuestions ?? 0;
+    let score = locals.totalCorrect ?? 0;
+
+    let randomIndex = parseInt(Math.random() * chosenWords.length);
+    let chosenWord = chosenWords[randomIndex];
+    let [correctWord, correctPart, correctDef] = chosenWord.split('\t');
 %>
 
-<h1>Word Quiz!</h1>
+<% if (questionCount === 0) { %>
+    <h1>Welcome to the word quiz!</h1>
+<% } else { %>
+    <h1>Score: <%= score %> / <%= questionCount %></h1>
+<% } %>
 
 <!-- Show the word and part of speech -->
 <h2><%= correctWord %> - <%= correctPart %></h2>
 
-<form action="">
+<form action="/quiz" method="post">
     <ol>
-        <% for (currentWord of chosenWords) { 
-            // Loop through each word, show its definition only in the list
-            let [word, part, def] = currentWord.split('\t'); 
+        <% for (currentWord of chosenWords) {
+            // Loop through each word, show its definition only
+            let [word, part, def] = currentWord.split('\t');
         %>
             <li>
                 <label>
-                    <input type="radio" name="answer">
+                    <input 
+                        type="radio" 
+                        name="userChoice" 
+                        value="<%= def %>"
+                    >
                     <%= def %>
                 </label>
             </li>
@@ -29,6 +43,26 @@
     </ol>
 
     <input type="submit" value="Submit Answer!">
+
+    <!-- Hidden inputs to track state -->
+    <input 
+        type="hidden" 
+        name="correctDef" 
+        value="<%= correctDef %>"
+    >
+
+    <input 
+        type="hidden" 
+        name="totalQuestions" 
+        value="<%= questionCount %>"
+    >
+
+    <input 
+        type="hidden" 
+        name="totalCorrect" 
+        value="<%= score %>"
+    >
+
 </form>
 
 </body>

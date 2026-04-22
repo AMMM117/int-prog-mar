@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const quizRouter = require ('./routes/quiz');
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
@@ -7,6 +8,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use('/quiz,quizRouter')
 app.get('/solution', (req, res) => {
     let num1 = parseInt(req.query['num1']);
     let num2 = parseInt(req.query['num2']);
@@ -18,7 +20,6 @@ app.get('/solution', (req, res) => {
 app.get('/submit', (req, res) => {
     console.log('--- GET Request Received ---');
     console.log('Query Parameters:', req.query);
-
     Object.entries(req.query).forEach(([key, value]) => {
         console.log(` ${key}: ${value}`);
     });
