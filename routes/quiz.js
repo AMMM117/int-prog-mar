@@ -4,23 +4,25 @@ const { readFile } = require('fs').promises;
 
 router.get("/", async (req, res) => {
     let chosenWords = await getWords();
-    console.log("Chosen Words: ", chosenWords);
+
     res.render('quiz', { chosenWords });
 });
 
 router.post("/", async (req, res) => {
+    let userChoice = req.body.userChoice; //4
+    let previousCorrectDef = req.body.correctDef;
+    let totalQuestions = parseInt(req.body.totalQuestions) + 1; //3
+    let totalCorrect = parseInt(req.body.totalCorrect);
+    let wasCorrect = false;//1
+
+    if (userChoice === previousCorrectDef) {
+        totalCorrect++;
+        wasCorrect = true;
+    }//end of 1
     let chosenWords = await getWords();
 
-    let userChoice = req.body.userChoice;
-    let correctDef = req.body.correctDef;
-    let totalQuestions = parseInt(req.body.totalQuestions) + 1;
-    let totalCorrect = parseInt(req.body.totalCorrect);
-
-    if (userChoice === correctDef) {
-        totalCorrect++;
-    }
-
-    res.render('quiz', { chosenWords, totalQuestions, totalCorrect });
+    res.render('quiz', {chosenWords,totalQuestions,totalCorrect,wasCorrect,
+    previousCorrectDef});
 });
 
 let getWords = async () => {
@@ -53,7 +55,6 @@ let shuffle = (array) => {
         let randomNumber = Math.floor(Math.random() * (i + 1));
         [array[i], array[randomNumber]] = [array[randomNumber], array[i]];
     }
-    console.log("Array shuffled!");
 }
 
 module.exports = router;

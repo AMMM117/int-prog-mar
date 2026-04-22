@@ -8,7 +8,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/quiz', quizRouter);
+app.use('/quiz', quizRouter); // NEW: fixed router mount
 
 app.get('/solution', (req, res) => {
     let num1 = parseInt(req.query['num1']);
@@ -17,6 +17,7 @@ app.get('/solution', (req, res) => {
     res.send(`<h2>${num1} + ${num2} = ${total} </h2>`);
 });
 
+// GET /submit - logs query parameters
 app.get('/submit', (req, res) => {
     console.log('--- GET Request Received ---');
     console.log('Query Parameters:', req.query);
@@ -28,6 +29,7 @@ app.get('/submit', (req, res) => {
     res.send('<h2>GET request received!</h2><pre>' + JSON.stringify(req.query, null, 2) + '</pre>');
 });
 
+// POST /submit - logs body contents
 app.post('/submit', (req, res) => {
     console.log('--- POST Request Received ---');
     console.log('Body:', req.body);

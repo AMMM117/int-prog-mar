@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -11,7 +12,7 @@
 
     let randomIndex = parseInt(Math.random() * chosenWords.length);
     let chosenWord = chosenWords[randomIndex];
-    let [correctWord, correctPart, correctDef] = chosenWord.split('\t');
+    let [correctWord, correctPart, nextCorrectDef] = chosenWord.split('\t');
 %>
 
 <% if (questionCount === 0) { %>
@@ -20,15 +21,23 @@
     <h1>Score: <%= score %> / <%= questionCount %></h1>
 <% } %>
 
-<!-- Show the word and part of speech -->
+<% if (typeof wasCorrect !== 'undefined') { %>
+    <% if (wasCorrect) { %>
+        <p><span class="correct">Correct!</span></p>
+    <% } else { %>
+        <p>
+            <span class="incorrect">Incorrect!</span>
+            The correct definition was: <%= previousCorrectDef %>
+        </p>
+    <% } %>
+<% } %>
+
 <h2><%= correctWord %> - <%= correctPart %></h2>
 
 <form action="/quiz" method="post">
     <ol>
-        <% for (let currentWord of chosenWords) {
-            // Loop through each word, show its definition only
-            let [word, part, def] = currentWord.split('\t');
-        %>
+        <% for (let currentWord of chosenWords) { %>
+            <% let [word, part, def] = currentWord.split('\t'); %>
             <li>
                 <label>
                     <input 
@@ -44,11 +53,10 @@
 
     <input type="submit" value="Submit Answer!">
 
-    <!-- Hidden inputs to track state -->
     <input 
         type="hidden" 
         name="correctDef" 
-        value="<%= correctDef %>"
+        value="<%= nextCorrectDef %>"
     >
 
     <input 
